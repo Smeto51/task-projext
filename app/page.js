@@ -1,6 +1,7 @@
-'use client'
+//'use client'
+
 import Link from "next/link";
-import { useState } from "react";
+//import { use } from "react";
 
 
 async function fetchData() {
@@ -9,20 +10,10 @@ async function fetchData() {
   return result;
 }
 
-function MouseClickButton () {
-  'use strict';
-  const [count, setCount] = useState(0);
-  return (
-    <div>
-      <p>Вы нажали {count} раз</p>
-      <button onClick={() => setCount(count + 1)}>
-        Нажми на меня
-      </button>
-    </div>
-  ) 
-}
 
-export default async function Home() {
+
+
+export default async function Home() { //Это работает, но не совместимо с next.js а имеено async
   const posts = await fetchData();
   //console.log(res);
   return (
@@ -32,7 +23,7 @@ export default async function Home() {
         <div key={el.id} className="post">
           <h2>{el.title}</h2>
           <p>{el.body}</p>
-          <Link href={`/post/` + el.title}>Детальнее</Link>
+          <Link href={`/post/` + el.id}>Детальнее</Link>
         </div>
       ))}
     </div>
