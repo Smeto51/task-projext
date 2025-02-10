@@ -1,0 +1,53 @@
+ * {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    color: #000000;
+    background: #e3e5e8;
+    font-family: tahoma;
+}
+nav a {
+    text-decoration: none;
+    color:#000000;
+}
+
+header {
+    display:  flex; 
+    justify-content: space-between;
+    background-color: #f7f7f7;
+
+    padding: 15px 50px;
+}
+
+header a {
+    margin-left: 20px;
+}
+
+.smetoStyle {
+    padding: 50px;
+}
+
+div h1{
+    font-family: tahoma;
+    font-size: 18px
+}
+
+
+.post {
+    width: 700px;
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 20px;
+    background: #f7f7f7;
+}
+.post h2 {
+    margin-bottom: 20px;
+}
+.post p {
+    margin-bottom: 10px;
+}
+.post a {
+    color: #283c44;
+}

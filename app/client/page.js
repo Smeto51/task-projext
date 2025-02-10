@@ -3,3 +3,5 @@ export default function Client() {
       <h1>Client страница</h1>
     )
   }
+
+  
