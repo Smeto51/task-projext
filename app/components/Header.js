@@ -8,6 +8,8 @@ const Header = () => {
             <nav>
                 <Link href="/">Главная</Link>
                 <Link href="/about">About</Link>
+                <Link href="/form">Добавить объявление</Link>
+                <Link href="/bb">Доска объявлений</Link>
             </nav>
         </header>    )     
 }

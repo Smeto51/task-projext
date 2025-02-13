@@ -1,0 +1,45 @@
+.Announcement {
+  width: 50%;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  border-radius: 5px;
+  background: #f7f7f7;
+}
+
+.AnnouncementForm {
+  display: grid;
+  grid-template-columns: 15% 85%; /* Метки слева, поля справа */
+  gap: 10px; /* Расстояние между строками */
+}
+
+.AnnouncementForm h1 {
+  grid-column: 1 / -1; /* Заголовок занимает всю ширину */
+  text-align: center; /* Выравнивание заголовка по центру */
+}
+
+textarea.specification {
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.button-container {
+  grid-column: 2; /* Кнопка занимает вторую колонку (как textarea) */
+}
+
+button.buttonWorkedForm {
+
+  width: 100%; /* Кнопка растягивается на всю ширину контейнера */
+  padding: 10px;
+  font-size: 20px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.buttonWorkedForm:hover {
+  background-color: #005bb5;
+}
