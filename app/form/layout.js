@@ -1,4 +1,4 @@
-import "./WorkerForm.css";
+import "./AnnouncementForm.css";
 
 export const metadata = {
   title: "Работа с формой",

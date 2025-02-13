@@ -1,10 +1,10 @@
 "use client";
-import WorkedForm from "../components/WorkedForm";
+import Announcement from "../components/AnnouncementForm";
 
 export default function CreaterdForm() {
   return (
     <div>
-      <WorkedForm/>
+      <Announcement/>
     </div>
   );
 }

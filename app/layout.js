@@ -1,5 +1,6 @@
 import "./globals.css";
 import Header from "./components/Header";
+import { inter } from './ui/fonts';
 
 export const metadata = {
   title: "Smeto тестовый проект",
@@ -9,7 +10,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return ( 
     <html lang="en">
-      <body>
+      <body className={inter.className}>
         <Header/>
        <div className="smetoStyle"> {children} </div>
       </body>
