@@ -7,11 +7,21 @@ export default function Bulletin_board() {
   let [bb, setBb] = useState([]);
   let [sortPrice, setSortPrice] = useState("asc");
   let [isLoading, setIsLoading] = useState(true);
+  
+  let [minPrice, setMinPrice] = useState("");
+  let [maxPrice, setMaxPrice] = useState("");
+
+  let [filterBb, setFilterBb] = useState("");
+
+
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const saveAnnouncement =
         JSON.parse(localStorage.getItem("Announcement")) || [];
+      
+      //* setFilterBb(saveAnnouncement);
       setBb(saveAnnouncement);
       setIsLoading(false);
     }
@@ -25,15 +35,19 @@ export default function Bulletin_board() {
     });
     setBb(sortedBb);
     setSortPrice(order);
-
-    localStorage.setItem("sortOrder", order);
   };
+
+const filterBbByPrice = () => {
+  
+}
+
+
 
   if (!isLoading) {
     return (
       <div style={{ textAlign: "center" }}>
         <h1>Доска объявлений</h1>
-        <div className="sort-buttons">
+        <div>
           <button className="blue" onClick={() => sortBbByPrice("asc")}>
             Сортировать по возрастанию цены
           </button>
@@ -57,18 +71,3 @@ export default function Bulletin_board() {
   }
 }
 
-/**
-export default async function Home() {
-  const posts = await fetchData();
-  return (
-    <div>
-      <h1>Главная страница</h1>
-      {posts.map((el) => (
-        //<div key={el.id} className="post">
-        <div key={el.id} className="post">
-          <h2>{el.title}</h2>
-          <p>{el.body}</p>
-          <Link href={`/post/` + el.id}>Детальнее</Link>
-        </div>
-      ))}
-    </div> */
