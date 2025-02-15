@@ -14,6 +14,8 @@ nav a {
 }
 
 header {
+    position: fixed;
+    width: 100%;
     display:  flex; 
     justify-content: space-between;
     background-color: #f7f7f7;
@@ -26,14 +28,16 @@ header a {
 }
 
 .smetoStyle {
-    padding: 10px;
+    padding-top: 70px;
     margin-left: 40px;
 }
 
 div h1{
     font-family: tahoma;
     font-size: 18px
+    
 }
+
 
 
 .post {
@@ -42,6 +46,8 @@ div h1{
     padding: 20px;
     border-radius: 20px;
     background: #f7f7f7;
+    margin-left: auto;
+    margin-right: auto;
 }
 .post h2 {
     margin-bottom: 20px;
