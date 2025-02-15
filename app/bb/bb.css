@@ -12,3 +12,13 @@ button.blue {
 button.blue:hover {
   background-color: #005bb5;
 }
+
+.filter input{
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  padding: 8px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
