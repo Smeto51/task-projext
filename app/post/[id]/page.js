@@ -1,34 +1,76 @@
-"use client"; // Указывает, что компонент выполняется на стороне клиента
-import { useState, useEffect } from 'react';
+"use client";
 
+import { useEffect, useState } from "react";
 
-export default function Home() {
-  const [inputValue, setInputValue] = useState('');
-
+export default function Announcement() {
+  const [nameAnnouncement, setNameAnnouncement] = useState("");
+  const [specification, setSpecification] = useState("");
+  const [price, setPrice] = useState("");
 
   // Загрузка данных из localStorage при монтировании компонента
   useEffect(() => {
-    const savedValue = localStorage.getItem('savedInput');
-    if (savedValue) {
-      setInputValue(savedValue);
+    if (typeof window !== "undefined") {
+      const savedName = localStorage.getItem("saveNameAnnouncement");
+      const savedSpecification = localStorage.getItem("saveSpecification");
+      const savedPrice = localStorage.getItem("savePrice");
+
+      if (savedName) setNameAnnouncement(savedName);
+      if (savedSpecification) setSpecification(savedSpecification);
+      if (savedPrice) setPrice(savedPrice);
     }
   }, []);
 
   const handleSave = () => {
-    // Сохранение значения в localStorage
-    localStorage.setItem('savedInput', inputValue);
-    alert('Данные сохранены в localStorage!');
+    if (typeof window !== "undefined") {
+      localStorage.setItem("saveNameAnnouncement", nameAnnouncement);
+      localStorage.setItem("saveSpecification", specification);
+      localStorage.setItem("savePrice", price);
+      alert("Объявление добавлено!");
+
+      console.log(localStorage.getItem("saveNameAnnouncement"));
+    }
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Введите текст"
-      />
-      <button onClick={handleSave}>Сохранить</button>
-    </div>
+    <form className="Announcement">
+      <div className="AnnouncementForm">
+        <h1>Добавление объявления</h1>
+
+        <label htmlFor="nameAnnouncement">Название:</label>
+        <input
+          type="text"
+          value={nameAnnouncement}
+          onChange={(nameValue) => setNameAnnouncement(nameValue.target.value)}
+          id="nameAnnouncement"
+          maxLength={57}
+          placeholder="Введите название"
+        />
+
+        <label>Описание:</label>
+        <textarea
+          rows="10"
+          className="specification"
+          value={specification}
+          onChange={(specificationValue) =>
+            setSpecification(specificationValue.target.value)
+          }
+        ></textarea>
+
+        <label htmlFor="price">Цена:</label>
+        <input
+          type="number"
+          value={price}
+          onChange={(priceValue) => setPrice(priceValue.target.value)}
+          id="price"
+          maxLength={12}
+        />
+
+        <div className="button-container">
+          <button className="buttonWorkedForm" onClick={handleSave}>
+            Добавить
+          </button>
+        </div>
+      </div>
+    </form>
   );
 }

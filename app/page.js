@@ -1,7 +1,5 @@
 //'use client'
-
 import Link from "next/link";
-import { lusitana } from '@/app/ui/fonts';
 
 async function fetchData() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
@@ -15,7 +13,6 @@ export default async function Home() {
   return (
     <div>
       <h1>Главная страница</h1>
-      <p className={`${lusitana.className}`}>Добро пожаловать</p>
       {posts.map((el) => (
         //<div key={el.id} className="post">
         <div key={el.id} className="post">
