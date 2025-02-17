@@ -39,7 +39,6 @@ div h1{
 }
 
 
-
 .post {
     width: 700px;
     margin-top: 50px;
@@ -57,4 +56,5 @@ div h1{
 }
 .post a {
     color: #283c44;
+    margin-right: 10px;
 }
