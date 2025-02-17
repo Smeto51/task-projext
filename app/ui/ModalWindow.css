@@ -1,0 +1,53 @@
+.modalWindov {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+}
+.modalWindovItems {
+  background: #fff;
+  width: 42vw;
+  border-radius: 8px;
+  height: auto;
+  min-width: 300px;
+  max-width: 600px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+div button {
+  padding: 10px 20px;
+  font-size: calc(0.8em + 0.5vw);
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+div button:hover {
+  background-color: #005bb5;
+}
+
+div h1 {
+  font-size: calc(1.5em + 0.5vw); /* Адаптивный размер шрифта */
+  margin: 0;
+  text-align: center;
+}
+div textarea {
+  margin-top: 10px;
+  font-size: calc(0.5em + 0.8vw);
+  min-height: 250px;
+}
+
+div input {
+  text-align: center;
+  font-size: calc(1em + 0.8vw);
+}

@@ -1,40 +1,47 @@
 "use client";
-
 import { useEffect, useState } from "react";
-
 import Link from "next/link";
 import { handleDelete } from "../ui/deleteItems";
+import ModalWindow from "../ui/ModalWindowBb";
 
-// Фильтрация объявлений по цене
-const filterBbByPrice = (bb, setFilterBb, minPrice, maxPrice) => {
-  const filtered = bb.filter((unit) => {
-    const price = parseFloat(unit.price);
+const filterBbByPrice = (bb, minPrice, maxPrice) => {
+  return bb.filter((item) => {
+    const price = parseFloat(item.price);
     const min = minPrice ? parseFloat(minPrice) : 0;
     const max = maxPrice ? parseFloat(maxPrice) : +Infinity;
     return price >= min && price <= max;
   });
-  setFilterBb(filtered);
 };
 
-const sortBbByPrice = (order, temp_bb, setFilterBb) => {
-  const sortedBb = [...temp_bb].sort((a, b) => {
+const sortBbByPrice = (order, temp_bb) => {
+  return [...temp_bb].sort((a, b) => {
     const priceA = parseFloat(a.price);
     const priceB = parseFloat(b.price);
     return order === "asc" ? priceA - priceB : priceB - priceA;
   });
-  setFilterBb(sortedBb);
 };
+
+const handleEdit = (itemBb, setModalWindow, setEditingBb) => {
+ //event.preventDefault();
+  setEditingBb(itemBb);
+  setModalWindow(true);
+}
+
+
 
 export default function Bulletin_board() {
   let [bb, setBb] = useState([]);
-
+  const [sortPrice, setSortPrice] = useState("asc");
   let [isLoading, setIsLoading] = useState(true);
 
   let [minPrice, setMinPrice] = useState("");
   let [maxPrice, setMaxPrice] = useState("");
   let [filterBb, setFilterBb] = useState([]);
 
-  let displayBb;
+  const [modalOpen, setModalWindow] = useState(false);
+  const [editingBb, setEditingBb] = useState(null);
+
+  let displayBb = [];
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -46,8 +53,10 @@ export default function Bulletin_board() {
   }, []);
 
   useEffect(() => {
-    filterBbByPrice(bb, setFilterBb, minPrice, maxPrice);
-  }, [minPrice, maxPrice, bb]);
+    let filteredBb = filterBbByPrice(bb, minPrice, maxPrice);
+    let sortedBb = sortBbByPrice(sortPrice, filteredBb);
+    setFilterBb(sortedBb);
+  }, [minPrice, maxPrice, bb, sortPrice]);
 
   if (!isLoading) {
     displayBb =
@@ -73,13 +82,13 @@ export default function Bulletin_board() {
         <div>
           <button
             className="blue"
-            onClick={() => sortBbByPrice("asc", displayBb, setFilterBb)}
+            onClick={() => setSortPrice("asc")}
           >
             Сортировать по возрастанию цены
           </button>
           <button
             className="blue"
-            onClick={() => sortBbByPrice("desc", displayBb, setFilterBb)}
+            onClick={() => setSortPrice("desc")}
           >
             Сортировать по убыванию цены
           </button>
@@ -91,11 +100,8 @@ export default function Bulletin_board() {
               <h2>{temp_bb.name}</h2>
               <p>{temp_bb.specification}</p>
               <p>{temp_bb.price} rub</p>
-              <Link href="">Редактировать</Link>
-              <Link
-                href=""
-                onClick={() => handleDelete(temp_bb.id, bb, setBb)}
-              >
+              <Link href="" onClick={() => handleEdit(temp_bb, setModalWindow, setEditingBb)}>Редактировать</Link>
+              <Link href="" onClick={() => handleDelete(temp_bb.id, bb, setBb)}>
                 Удалить
               </Link>
             </div>
@@ -103,7 +109,19 @@ export default function Bulletin_board() {
         ) : (
           <p>Объявлений сейчас нет</p>
         )}
+
+        {modalOpen && (
+          <ModalWindow
+          setModalWindow={setModalWindow}
+          editingBb={editingBb}
+          bb={bb}
+          setBb={setBb}
+          >
+            
+          </ModalWindow>
+        )}
       </div>
+      
     );
   }
 }
