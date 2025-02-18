@@ -14,6 +14,7 @@ const Header = () => {
       <strong>Тестирование Сайта</strong>
       <nav>
         <Link href="/">Главная</Link>
+        <Link href="/fetch">Курс Валют и погода(fetch)</Link>
         <Link href="/form">Добавить объявление</Link>
         <Link href="/bb">Доска объявлений</Link>
         <Link href="" onClick={handleClearBoard} style={{ marginRight: 70 }}>

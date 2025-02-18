@@ -1,0 +1,22 @@
+div.container {
+  padding: 20px;
+}
+div.blocks {
+  border-radius: 20px;
+  background: #f7f7f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: inline-block;
+}
+
+div.block {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для блоков */
+  min-width: 150px; /* Минимальная ширина */
+  
+}
