@@ -1,4 +1,57 @@
-'use client'
+"use client";
+import { useState } from "react";
+import "./ModalWindow.css";
+
+export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
+  const [name, setName] = useState(editingBb.name);
+  const [specification, setSpecification] = useState(editingBb.specification);
+  const [price, setPrice] = useState(editingBb.price);
+
+  const handleSave = () => {
+    const updatedBb = bb.map((item) =>
+      item.id === editingBb.id ? { ...item, name, specification, price } : item
+    );
+    setBb(updatedBb);
+    localStorage.setItem("Announcement", JSON.stringify(updatedBb));
+    setModalWindow(false);
+  };
+
+  return (
+    <div className="modalWindov">
+      <div className="modalWindovItems">
+        <h1>Редактирование объявления</h1>
+
+        <input
+          type="text"
+          placeholder="Название"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <textarea
+          rows={5}
+          placeholder="Описание"
+          value={specification}
+          onChange={(specificationValue) =>
+            setSpecification(specificationValue.target.value)
+          }
+        />
+
+        <input
+          style={{ marginBottom: "10px", marginTop: "5px" }}
+          type="number"
+          placeholder="Цена"
+          value={price}
+          onChange={(priceValue) => setPrice(priceValue.target.value)}
+        />
+
+        <button onClick={handleSave}>Сохранить</button>
+        <button onClick={() => setModalWindow(false)}>Отмена</button>
+      </div>
+    </div>
+  );
+}
+/*'use client'
 import { useState } from "react";
 import "./ModalWindow.css";
 
@@ -48,4 +101,4 @@ export default function modalWindow({setModalWindow, editingBb, bb, setBb}) {
       </div>
     </div>
   );
-}
+}*/

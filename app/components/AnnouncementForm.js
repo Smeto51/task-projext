@@ -11,7 +11,7 @@ export default function AnnouncementAdd() {
 
   const handleSave = () => {
     if (typeof window !== "undefined") {
-      if (nameAnnouncement=="" || specification=="" || price=="") {
+      if (nameAnnouncement == "" || specification == "" || price == "") {
         alert("Какое-то поле не заполнено, не удалось сохоранить");
         event.preventDefault();
         return;

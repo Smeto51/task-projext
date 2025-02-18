@@ -22,12 +22,10 @@ const sortBbByPrice = (order, temp_bb) => {
 };
 
 const handleEdit = (itemBb, setModalWindow, setEditingBb) => {
- //event.preventDefault();
+  //event.preventDefault();
   setEditingBb(itemBb);
   setModalWindow(true);
-}
-
-
+};
 
 export default function Bulletin_board() {
   let [bb, setBb] = useState([]);
@@ -80,16 +78,10 @@ export default function Bulletin_board() {
         </div>
 
         <div>
-          <button
-            className="blue"
-            onClick={() => setSortPrice("asc")}
-          >
+          <button className="blue" onClick={() => setSortPrice("asc")}>
             Сортировать по возрастанию цены
           </button>
-          <button
-            className="blue"
-            onClick={() => setSortPrice("desc")}
-          >
+          <button className="blue" onClick={() => setSortPrice("desc")}>
             Сортировать по убыванию цены
           </button>
         </div>
@@ -100,7 +92,14 @@ export default function Bulletin_board() {
               <h2>{temp_bb.name}</h2>
               <p>{temp_bb.specification}</p>
               <p>{temp_bb.price} rub</p>
-              <Link href="" onClick={() => handleEdit(temp_bb, setModalWindow, setEditingBb)}>Редактировать</Link>
+              <Link
+                href=""
+                onClick={() =>
+                  handleEdit(temp_bb, setModalWindow, setEditingBb)
+                }
+              >
+                Редактировать
+              </Link>
               <Link href="" onClick={() => handleDelete(temp_bb.id, bb, setBb)}>
                 Удалить
               </Link>
@@ -112,16 +111,13 @@ export default function Bulletin_board() {
 
         {modalOpen && (
           <ModalWindow
-          setModalWindow={setModalWindow}
-          editingBb={editingBb}
-          bb={bb}
-          setBb={setBb}
-          >
-            
-          </ModalWindow>
+            setModalWindow={setModalWindow}
+            editingBb={editingBb}
+            bb={bb}
+            setBb={setBb}
+          ></ModalWindow>
         )}
       </div>
-      
     );
   }
 }
