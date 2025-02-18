@@ -29,7 +29,6 @@ textarea.specification {
 }
 
 button.buttonWorkedForm {
-
   width: 100%; /* Кнопка растягивается на всю ширину контейнера */
   padding: 10px;
   font-size: 20px;
