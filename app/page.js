@@ -5,6 +5,7 @@ async function fetchData() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
   //const res = await fetch("https://api.vercel.app/blog");
   const result = res.json();
+  console.log("result="+result);
   return result;
 }
 

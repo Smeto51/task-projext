@@ -1,15 +1,22 @@
-div.container {
+.container {
+  display: flex;
+  gap: 20px;
   padding: 20px;
-}
-div.blocks {
-  border-radius: 20px;
-  background: #f7f7f9;
-  border: 1px solid #ccc;
-  padding: 10px;
-  display: inline-block;
+  justify-content: flex-start;
 }
 
-div.block {
+.blocks {
+  padding: 10px;
+
+  background: #f7f7f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: calc(50%-10px);
+}
+
+.block {
   border: 1px solid;
   border-radius: 5px;
   padding: 10px;
@@ -18,5 +25,14 @@ div.block {
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для блоков */
   min-width: 150px; /* Минимальная ширина */
-  
+}
+.block2 {
+  border: 1px solid;
+  padding: 20px;
+  margin: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для блоков */
+  min-width: 150px; /* Минимальная ширина */
 }
