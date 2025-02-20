@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { LineChart } from "../fetch/bar";
 
 const Header = () => {
   const handleClearBoard = () => {
