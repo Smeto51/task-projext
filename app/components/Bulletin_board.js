@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { handleDelete } from "../ui/deleteItems";
 import ModalWindow from "../ui/ModalWindowBb";
+import { BulletinBloack } from "./BulletinBloack";
 
 const filterBbByPrice = (bb, minPrice, maxPrice) => {
   return bb.filter((item) => {
@@ -21,7 +20,7 @@ const sortBbByPrice = (order, temp_bb) => {
   });
 };
 
-const handleEdit = (itemBb, setModalWindow, setEditingBb) => {
+export const handleEdit = (itemBb, setModalWindow, setEditingBb) => {
   //event.preventDefault();
   setEditingBb(itemBb);
   setModalWindow(true);
@@ -88,22 +87,13 @@ export default function Bulletin_board() {
 
         {displayBb.length > 0 ? (
           displayBb.map((temp_bb) => (
-            <div key={temp_bb.id} className="post">
-              <h2>{temp_bb.name}</h2>
-              <p>{temp_bb.specification}</p>
-              <p>{temp_bb.price} rub</p>
-              <Link
-                href=""
-                onClick={() =>
-                  handleEdit(temp_bb, setModalWindow, setEditingBb)
-                }
-              >
-                Редактировать
-              </Link>
-              <Link href="" onClick={() => handleDelete(temp_bb.id, bb, setBb)}>
-                Удалить
-              </Link>
-            </div>
+            <BulletinBloack key={temp_bb.id} temp_bb={temp_bb}
+            bb={bb}
+            setBb={setBb}
+            setModalWindow={setModalWindow}
+            setEditingBb={setEditingBb}
+            />
+            
           ))
         ) : (
           <p>Объявлений сейчас нет</p>
@@ -121,3 +111,17 @@ export default function Bulletin_board() {
     );
   }
 }
+
+/*<div>
+<Link
+  href=""
+  onClick={() =>
+    handleEdit(temp_bb, setModalWindow, setEditingBb)
+  }
+>
+  Редактировать
+</Link>
+<Link href="" onClick={() => handleDelete(temp_bb.id, bb, setBb)}>
+  Удалить
+</Link>
+</div>*/

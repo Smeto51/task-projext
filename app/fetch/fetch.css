@@ -1,0 +1,90 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 812px; /* Ограничение ширины контейнера */
+  
+}
+
+.blocks {
+  background: #f7f7f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.block {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для блоков */
+  min-width: 150px;
+  flex: 1; /* Растягиваем блок на всю высоту */
+  
+}
+.block2 {
+  border: 1px solid;
+  padding: 20px;
+  margin: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для блоков */
+  min-width: 150px;
+  border-radius: 5px;
+  flex: 1; /* Растягиваем блок на всю высоту */
+}
+.weather {
+  width: 40px;
+  height: 40px;
+  margin-bottom: -6px;
+}
+.country {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  margin-bottom: -4px;
+}
+button.buttonWorkedForm {
+  padding: 10px;
+  font-size: 20px;
+
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button.buttonWorkedForm:hover {
+  background-color: #005bb5;
+}
+
+h1 {
+  margin: inherit;
+  margin-bottom: 10px; 
+  text-align: center;
+}
+.blockButton {
+  margin: auto;
+  width: 100%;
+  max-width: 300px;
+  grid-column: span 3;
+}
+
+.bar {
+  
+  background: #f7f7f9;
+  border: 1px solid #ccc; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  grid-column: span 2;
+}

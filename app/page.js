@@ -2,8 +2,7 @@
 import Link from "next/link";
 
 async function fetchData() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  //const res = await fetch("https://api.vercel.app/blog");
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts");;
   const result = res.json();
   return result;
 }
