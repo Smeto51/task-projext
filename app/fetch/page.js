@@ -11,6 +11,7 @@ const API_KEY_CURRENCY = "998ea5243428428a9c8c6199c5602cb6";
 const API_KEY_WEATHER = "d345de8088fcd5858702b7a64416eb36";
 
 const weatherDirectory = (description) => {
+  console.log ("re-render weatherDirectory");
   switch (description) {
     case "overcast clouds":
       return "Пасмурные облака";
@@ -57,10 +58,12 @@ const WeatherBlock = (
 );
 
 const handleButtonUpdate = (setUpdate) => {
+  console.log ("re-render handleButtonUpdate");
   setUpdate((update) => !update);
 };
 
 const FetchApi = (setOpenexchangerates, setCurrencies, setWeather) => {
+  console.log ("re-render FetchApi");
   fetch(
     `https://openexchangerates.org/api/latest.json?app_id=${API_KEY_CURRENCY}`
   )
@@ -142,7 +145,7 @@ const Fetch = () => {
   const [weather, setWeather] = useState([]);
   const [update, setUpdate] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  console.log ("re-render Fetch");
   useEffect(() => {
     FetchApi(setOpenexchangerates, setCurrencies, setWeather);
     setIsLoading(false);

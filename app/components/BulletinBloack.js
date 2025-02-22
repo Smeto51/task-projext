@@ -1,8 +1,17 @@
 import Link from "next/link";
 import { handleDelete } from "../ui/deleteItems";
 import { handleEdit } from "./Bulletin_board";
+import React from "react";
 
-export const BulletinBloack = ({ temp_bb, bb, setBb, setModalWindow, setEditingBb }) => {
+export const BulletinBloack = React.memo(({
+  temp_bb,
+  bb,
+  setBb,
+  setModalWindow,
+  setEditingBb,
+  onEdit
+}) => {
+  console.log("re-render BulletinBloack");
   return (
     <div className="post">
       <h2>{temp_bb.name}</h2>
@@ -10,13 +19,22 @@ export const BulletinBloack = ({ temp_bb, bb, setBb, setModalWindow, setEditingB
       <p>{temp_bb.price} rub</p>
       <Link
         href=""
-        onClick={() => handleEdit(temp_bb, setModalWindow, setEditingBb)}
+        onClick={(a) => {
+          a.preventDefault();
+          onEdit(temp_bb);
+        }}
       >
         Редактировать
       </Link>
-      <Link href="" onClick={() => handleDelete(temp_bb.id, bb, setBb)}>
+      <Link
+        href=""
+        onClick={(a) => {
+          a.preventDefault();
+          handleDelete(temp_bb.id, bb, setBb);
+        }}
+      >
         Удалить
       </Link>
     </div>
   );
-};
+});

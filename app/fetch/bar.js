@@ -3,6 +3,7 @@ Chart.register(...registerables);
 import { Bar } from "react-chartjs-2";
 
 export const BarCBRF = ({ data: dCBRF }) => {
+  console.log ("re-render BarCBRF");
   // Данные для графика
   const dataCBRF = {
     labels: dCBRF.map((data) => data.Name),
@@ -60,6 +61,7 @@ const titleConfig = (a) => {
 };
 
 export const BarOpenexchangerates = ({ data: dOpenexchangerates }) => {
+  console.log ("re-render BarOpenexchangerates");
   // Данные для графика
   const Openexchangerates = {
     labels: dOpenexchangerates.map((data) => data.currency),
@@ -97,6 +99,7 @@ export const BarOpenexchangerates = ({ data: dOpenexchangerates }) => {
 };
 
 export const BarOpenweathermap = ({ data: dOpenweather }) => {
+  console.log ("re-render BarOpenweathermap");
   const Openweathermap = {
     labels: dOpenweather.map(
       (data) => data.city

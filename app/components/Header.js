@@ -1,15 +1,15 @@
 "use client";
 import Link from "next/link";
-import { LineChart } from "../fetch/bar";
+const handleClearBoard = () => {
+  console.log("re-render handleClearBoard");
+  if (typeof window !== "undefined") {
+    localStorage.clear();
+    alert("Доска объявлений очищена!");
+  }
+};
 
 const Header = () => {
-  const handleClearBoard = () => {
-    if (typeof window !== "undefined") {
-      localStorage.clear();
-      alert("Доска объявлений очищена!");
-    }
-  };
-
+  console.log("re-render Header");
   return (
     <header>
       <strong>Тестирование Сайта</strong>
@@ -18,7 +18,14 @@ const Header = () => {
         <Link href="/fetch">Курс Валют и погода(fetch)</Link>
         <Link href="/form">Добавить объявление</Link>
         <Link href="/bb">Доска объявлений</Link>
-        <Link href="" onClick={handleClearBoard} style={{ marginRight: 70 }}>
+        <Link
+          href=""
+          onClick={(a) => {
+            a.preventDefault();
+            handleClearBoard();
+          }}
+          style={{ marginRight: 70 }}
+        >
           Очистить доску
         </Link>
       </nav>
