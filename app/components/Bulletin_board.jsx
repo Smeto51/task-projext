@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useMemo, useCallback } from "react";
 import ModalWindow from "../ui/ModalWindowBb";
-import { BulletinBloack } from "./BulletinBloack";
+import { BulletinBloack } from "./BulletinBlock";
 
 const filterBbByPrice = (bb, minPrice, maxPrice) => {
   console.log("re-render filterBbByPrice");
