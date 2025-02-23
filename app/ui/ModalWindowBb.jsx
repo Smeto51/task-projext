@@ -1,5 +1,5 @@
 "use client";
-import React,{ useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import "./ModalWindow.css";
 import {
   InputNameAnnouncement,
@@ -9,12 +9,21 @@ import {
 
 export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
   console.log("re-render ModalWindow");
-  const [name] = useState(editingBb.name);
-  const [specification] = useState(editingBb.specification);
-  const [price] = useState(editingBb.price);
 
   const handleSave = () => {
     console.log("re-render handleSave");
+
+    const name = document.getElementById("nameAnnouncement").value;
+    const specification = document.getElementById("specification").value;
+    const price = document.getElementById("price").value;
+    if (
+      name === editingBb.name &&
+      specification === editingBb.specification &&
+      price === editingBb.price
+    ) {
+      setModalWindow(false);
+      return;
+    }
     const updatedBb = bb.map((item) =>
       item.id === editingBb.id
         ? {
@@ -34,9 +43,12 @@ export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
     <div className="modalWindov">
       <div className="modalWindovItems">
         <h1>Редактирование объявления</h1>
-        <InputNameAnnouncement name={name} />
-        <TextareaSpecification id="specification" spec={specification} />
-        <InputPrice price={price} />
+        <InputNameAnnouncement name={editingBb.name} />
+        <TextareaSpecification
+          id="specification"
+          spec={editingBb.specification}
+        />
+        <InputPrice price={editingBb.price} />
         <button onClick={handleSave}>Сохранить</button>
         <button onClick={() => setModalWindow(false)}>Отмена</button>
       </div>

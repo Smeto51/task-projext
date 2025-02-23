@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import '../fetch/fetch.css';
 
 const CurrencyBlock = ({ currency }) => {

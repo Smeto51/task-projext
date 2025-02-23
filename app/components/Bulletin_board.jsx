@@ -68,8 +68,10 @@ export default function Bulletin_board() {
     const displayBb =
       sortedBb.length > 0 ? sortedBb : minPrice || maxPrice ? sortedBb : bb;
     return (
+      
       <div style={{ textAlign: "center" }}>
         <h1>Доска объявлений</h1>
+        <script>{console.log('re-render SMETOZZZZZZ')}</script>
         <div className="filter">
           <input
             type="number"
@@ -101,8 +103,6 @@ export default function Bulletin_board() {
               temp_bb={temp_bb}
               bb={bb}
               setBb={setBb}
-              setModalWindow={setModalWindow}
-              setEditingBb={setEditingBb}
               onEdit={handleEditMemoized}
             />
           ))

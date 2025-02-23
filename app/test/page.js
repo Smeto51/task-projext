@@ -1,31 +1,70 @@
 'use client'
-import React, { useRef, useState } from 'react';
 
-function App() {
-    console.log('re-render App')
-  const [timer, setTimer] = useState(0);
-  const [ref, setRef] = useState(0);
-  const intervalRef = useRef();
+import { useState } from "react";
 
-  const startTimer = () => {
-    //intervalRef.current = setInterval(() => {
-        setRef(setInterval(() => {
-      setTimer((prevTimer) => prevTimer + 1);
-    }, 1000));
-  };
 
-  const stopTimer = () => {
-    //clearInterval(intervalRef.current);
-    clearInterval(ref)
+const VerySlowComponent = () => {
+  console.log("Very slow component re-renders");
+  return <div>Very slow component</div>;
+};
+
+const FullComponent = () => {
+  const [state, setState] = useState(1);
+
+  const onClick = () => {
+    setState(state + 1);
   };
 
   return (
-    <div>
-      <p>Timer: {timer}</p>
-      <button onClick={startTimer}>Start</button>
-      <button onClick={stopTimer}>Stop</button>
-    </div>
+    <>
+      <h3>component with everything</h3>
+      <p>Click this button - "slow" component will re-render</p>
+      <p>Re-render count: {state}</p>
+      <button onClick={onClick}>click here</button>
+      <VerySlowComponent />
+    </>
   );
-}
+};
+
+const ComponentWithButton = () => {
+  const [state, setState] = useState(1);
+
+  const onClick = () => {
+    setState(state + 1);
+  };
+
+  return (
+    <>
+      <p>Re-render count: {state}</p>
+      <button onClick={onClick}>click here</button>
+    </>
+  );
+};
+
+const SplitComponent = () => {
+  return (
+    <>
+      <h3>component with state moved down</h3>
+      <p>Click this button - "slow" component will NOT re-render</p>
+      <ComponentWithButton />
+      <VerySlowComponent />
+    </>
+  );
+};
+
+const App = () => {
+  console.log("App");
+  return (
+    <>
+      <h2>Open console, click a button</h2>
+      <p>Re-render should be logged on every click</p>
+
+      <FullComponent />
+      <hr />
+      <hr />
+      <SplitComponent />
+    </>
+  );
+};
 
 export default App;

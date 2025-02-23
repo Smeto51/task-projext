@@ -1,4 +1,4 @@
-import { Chart, registerables, scales, Ticks } from "chart.js";
+import { Chart, registerables} from "chart.js";
 Chart.register(...registerables);
 import { Bar } from "react-chartjs-2";
 

@@ -1,17 +1,10 @@
 import Link from "next/link";
 import { handleDelete } from "../ui/deleteItems";
-import { handleEdit } from "./Bulletin_board";
 import React from "react";
 
-export const BulletinBloack = React.memo(({
-  temp_bb,
-  bb,
-  setBb,
-  setModalWindow,
-  setEditingBb,
-  onEdit
-}) => {
+export const BulletinBloack = React.memo(({ temp_bb, bb, setBb, onEdit }) => {
   console.log("re-render BulletinBloack");
+  
   return (
     <div className="post">
       <h2>{temp_bb.name}</h2>
