@@ -8,6 +8,7 @@ async function fetchData() {
 }
 
 export default async function Home() {
+  console.log("re-render Home");
   const posts = await fetchData();
   return (
     <div>

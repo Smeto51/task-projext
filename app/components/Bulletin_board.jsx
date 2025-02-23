@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import ModalWindow from "../ui/ModalWindowBb";
-import { BulletinBloack } from "./BulletinBloack";
+import { BulletinBloack } from "./BulletinBlock";
 
 const filterBbByPrice = (bb, minPrice, maxPrice) => {
+  console.log("re-render filterBbByPrice");
   return bb.filter((item) => {
     const price = parseFloat(item.price);
     const min = minPrice ? parseFloat(minPrice) : 0;
@@ -13,6 +14,7 @@ const filterBbByPrice = (bb, minPrice, maxPrice) => {
 };
 
 const sortBbByPrice = (order, temp_bb) => {
+  console.log("re-render sortBbByPrice");
   return [...temp_bb].sort((a, b) => {
     const priceA = parseFloat(a.price);
     const priceB = parseFloat(b.price);
@@ -21,24 +23,21 @@ const sortBbByPrice = (order, temp_bb) => {
 };
 
 export const handleEdit = (itemBb, setModalWindow, setEditingBb) => {
-  //event.preventDefault();
+  console.log("re-render handleEdit");
   setEditingBb(itemBb);
   setModalWindow(true);
 };
 
 export default function Bulletin_board() {
+  console.log("re-render Bulletin_board");
   let [bb, setBb] = useState([]);
   const [sortPrice, setSortPrice] = useState("asc");
   let [isLoading, setIsLoading] = useState(true);
-
   let [minPrice, setMinPrice] = useState("");
   let [maxPrice, setMaxPrice] = useState("");
-  let [filterBb, setFilterBb] = useState([]);
 
   const [modalOpen, setModalWindow] = useState(false);
   const [editingBb, setEditingBb] = useState(null);
-
-  let displayBb = [];
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -49,18 +48,30 @@ export default function Bulletin_board() {
     }
   }, []);
 
-  useEffect(() => {
-    let filteredBb = filterBbByPrice(bb, minPrice, maxPrice);
-    let sortedBb = sortBbByPrice(sortPrice, filteredBb);
-    setFilterBb(sortedBb);
-  }, [minPrice, maxPrice, bb, sortPrice]);
+  const filteredBb = useMemo(() => {
+    return filterBbByPrice(bb, minPrice, maxPrice);
+  }, [minPrice, maxPrice, bb]);
+
+  const sortedBb = useMemo(() => {
+    return sortBbByPrice(sortPrice, filteredBb);
+  }, [sortPrice, filteredBb]);
+
+  const handleSortAsc = useCallback(() => setSortPrice("asc"), []);
+  const handleSortDesc = useCallback(() => setSortPrice("desc"), []);
+
+  const handleEditMemoized = useCallback((itemBb) =>
+    handleEdit(itemBb, setModalWindow, setEditingBb),
+    [setModalWindow, setEditingBb]
+  );
 
   if (!isLoading) {
-    displayBb =
-      filterBb.length > 0 ? filterBb : minPrice || maxPrice ? filterBb : bb;
+    const displayBb =
+      sortedBb.length > 0 ? sortedBb : minPrice || maxPrice ? sortedBb : bb;
     return (
+      
       <div style={{ textAlign: "center" }}>
         <h1>Доска объявлений</h1>
+        <script>{console.log('re-render SMETOZZZZZZ')}</script>
         <div className="filter">
           <input
             type="number"
@@ -77,28 +88,27 @@ export default function Bulletin_board() {
         </div>
 
         <div>
-          <button className="blue" onClick={() => setSortPrice("asc")}>
+          <button className="blue" onClick={handleSortAsc}>
             Сортировать по возрастанию цены
           </button>
-          <button className="blue" onClick={() => setSortPrice("desc")}>
+          <button className="blue" onClick={handleSortDesc}>
             Сортировать по убыванию цены
           </button>
         </div>
 
         {displayBb.length > 0 ? (
           displayBb.map((temp_bb) => (
-            <BulletinBloack key={temp_bb.id} temp_bb={temp_bb}
-            bb={bb}
-            setBb={setBb}
-            setModalWindow={setModalWindow}
-            setEditingBb={setEditingBb}
+            <BulletinBloack
+              key={temp_bb.id}
+              temp_bb={temp_bb}
+              bb={bb}
+              setBb={setBb}
+              onEdit={handleEditMemoized}
             />
-            
           ))
         ) : (
           <p>Объявлений сейчас нет</p>
         )}
-
         {modalOpen && (
           <ModalWindow
             setModalWindow={setModalWindow}
@@ -111,17 +121,3 @@ export default function Bulletin_board() {
     );
   }
 }
-
-/*<div>
-<Link
-  href=""
-  onClick={() =>
-    handleEdit(temp_bb, setModalWindow, setEditingBb)
-  }
->
-  Редактировать
-</Link>
-<Link href="" onClick={() => handleDelete(temp_bb.id, bb, setBb)}>
-  Удалить
-</Link>
-</div>*/
