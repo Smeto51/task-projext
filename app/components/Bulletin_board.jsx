@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useMemo, useCallback } from "react";
 import ModalWindow from "../ui/ModalWindowBb";
-import { BulletinBloack } from "./BulletinBlock";
+import { BulletinBlock } from "./BulletinBlock";
 
 const filterBbByPrice = (bb, minPrice, maxPrice) => {
   console.log("re-render filterBbByPrice");
@@ -49,10 +49,12 @@ export default function Bulletin_board() {
   }, []);
 
   const filteredBb = useMemo(() => {
+    if (isLoading || (minPrice == "" && maxPrice == "")) return [];
     return filterBbByPrice(bb, minPrice, maxPrice);
   }, [minPrice, maxPrice, bb]);
 
   const sortedBb = useMemo(() => {
+    if (isLoading) return [];
     return sortBbByPrice(sortPrice, filteredBb);
   }, [sortPrice, filteredBb]);
 
@@ -98,7 +100,7 @@ export default function Bulletin_board() {
 
         {displayBb.length > 0 ? (
           displayBb.map((temp_bb) => (
-            <BulletinBloack
+            <BulletinBlock
               key={temp_bb.id}
               temp_bb={temp_bb}
               bb={bb}

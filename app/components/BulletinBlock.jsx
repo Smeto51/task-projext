@@ -2,8 +2,8 @@ import Link from "next/link";
 import { handleDelete } from "../ui/deleteItems";
 import React from "react";
 
-export const BulletinBloack = React.memo(({ temp_bb, bb, setBb, onEdit }) => {
-  console.log("re-render BulletinBloack");
+export const BulletinBlock = React.memo(({ temp_bb, bb, setBb, onEdit }) => {
+  console.log("==re-render BulletinBlock==");
   
   return (
     <div className="post">
