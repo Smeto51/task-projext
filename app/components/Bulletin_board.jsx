@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import ModalWindow from "../ui/ModalWindowBb";
 import { BulletinBlock } from "./BulletinBlock";
 
@@ -14,7 +14,6 @@ const filterBbByPrice = (bb, minPrice, maxPrice) => {
 };
 
 const sortBbByPrice = (order, temp_bb) => {
-  console.log("re-render sortBbByPrice");
   return [...temp_bb].sort((a, b) => {
     const priceA = parseFloat(a.price);
     const priceB = parseFloat(b.price);
@@ -28,8 +27,17 @@ export const handleEdit = (itemBb, setModalWindow, setEditingBb) => {
   setModalWindow(true);
 };
 
-export default function Bulletin_board() {
-  console.log("re-render Bulletin_board");
+const handleClearBoard = (setBb) => {
+  console.log("re-render handleClearBoard");
+  if (typeof window !== "undefined") {
+    localStorage.clear();
+    setBb([]);
+    alert("Доска объявлений очищена!");
+  }
+};
+
+export default function Bulletinboard() {
+  console.log("re-render Bulletinboard");
   let [bb, setBb] = useState([]);
   const [sortPrice, setSortPrice] = useState("asc");
   let [isLoading, setIsLoading] = useState(true);
@@ -49,20 +57,26 @@ export default function Bulletin_board() {
   }, []);
 
   const filteredBb = useMemo(() => {
-    if (isLoading || (minPrice == "" && maxPrice == "")) return [];
+    if (isLoading) return [];
+    if (minPrice == "" && maxPrice == "") return bb;
     return filterBbByPrice(bb, minPrice, maxPrice);
   }, [minPrice, maxPrice, bb]);
 
   const sortedBb = useMemo(() => {
     if (isLoading) return [];
+    console.log("re-render sortBbByPrice");
     return sortBbByPrice(sortPrice, filteredBb);
   }, [sortPrice, filteredBb]);
 
   const handleSortAsc = useCallback(() => setSortPrice("asc"), []);
   const handleSortDesc = useCallback(() => setSortPrice("desc"), []);
 
-  const handleEditMemoized = useCallback((itemBb) =>
-    handleEdit(itemBb, setModalWindow, setEditingBb),
+  const handleClearMemoized = useCallback(() => {
+    handleClearBoard(setBb);
+  }, []);
+
+  const handleEditMemoized = useCallback(
+    (itemBb) => handleEdit(itemBb, setModalWindow, setEditingBb),
     [setModalWindow, setEditingBb]
   );
 
@@ -70,10 +84,17 @@ export default function Bulletin_board() {
     const displayBb =
       sortedBb.length > 0 ? sortedBb : minPrice || maxPrice ? sortedBb : bb;
     return (
-      
       <div style={{ textAlign: "center" }}>
+        <div>
+          <button
+            type="button"
+            className="fixedRight"
+            onClick={handleClearMemoized}
+          >
+            Очистить доску
+          </button>
+        </div>
         <h1>Доска объявлений</h1>
-        <script>{console.log('re-render SMETOZZZZZZ')}</script>
         <div className="filter">
           <input
             type="number"

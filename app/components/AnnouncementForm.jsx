@@ -4,22 +4,12 @@ import React, { useRef, useState } from "react";
 
 export const InputNameAnnouncement = ({ name, nameInputRef }) => {
   console.log(`re-render InputNameAnnouncement`);
-  /* 
-  let [nameAnnouncement, setNameAnnouncement] = useState(name || "") ;
-
-  const handleChange = (nameValue) => {
-    console.log('re-render')
-    setNameAnnouncement(nameValue.target.value)
-  }
-    */
   return (
     <>
       <input
         type="text"
-        defaultValue={name} //
-        ref={nameInputRef} //
-        /*</input>value={nameAnnouncement}*/
-        /*onChange={handleChange}*/
+        defaultValue={name}
+        ref={nameInputRef} 
         id="nameAnnouncement"
         maxLength={57}
         placeholder="Введите название"
@@ -66,7 +56,6 @@ export const InputPrice = ({ price, priceInputRef }) => {
 };
 
 export default function AnnouncementAdd() {
-  console.log("re-render AnnouncementAdd");
 
   const nameInputRef = useRef(null);
   const specificationTextareaRef = useRef(null);
