@@ -1,7 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  max-width: 812px; /* Ограничение ширины контейнера */
+  max-width: 1120px; /* Ограничение ширины контейнера */
   
 }
 

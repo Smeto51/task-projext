@@ -8,7 +8,6 @@ import {
 } from "../components/AnnouncementForm";
 
 export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
-  console.log("re-render ModalWindow");
 
   const handleSave = () => {
     console.log("re-render handleSave");

@@ -22,3 +22,10 @@ button.blue:hover {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
+.fixedRight {
+  position: fixed;
+  right: 0;
+  padding-right: -1px;
+  margin-right: 10px;
+}

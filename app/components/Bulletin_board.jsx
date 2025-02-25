@@ -1,5 +1,5 @@
 "use client";
-import React,{ useEffect, useState, useMemo, useCallback, useRef } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import ModalWindow from "../ui/ModalWindowBb";
 import { BulletinBlock } from "./BulletinBlock";
 
@@ -27,8 +27,17 @@ export const handleEdit = (itemBb, setModalWindow, setEditingBb) => {
   setModalWindow(true);
 };
 
-export default function Bulletin_board() {
-  console.log("re-render Bulletin_board");
+const handleClearBoard = (setBb) => {
+  console.log("re-render handleClearBoard");
+  if (typeof window !== "undefined") {
+    localStorage.clear();
+    setBb([]);
+    alert("Доска объявлений очищена!");
+  }
+};
+
+export default function Bulletinboard() {
+  console.log("re-render Bulletinboard");
   let [bb, setBb] = useState([]);
   const [sortPrice, setSortPrice] = useState("asc");
   let [isLoading, setIsLoading] = useState(true);
@@ -37,8 +46,6 @@ export default function Bulletin_board() {
 
   const [modalOpen, setModalWindow] = useState(false);
   const [editingBb, setEditingBb] = useState(null);
-
-  const prevFilteredBbRef = useRef([]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -50,7 +57,6 @@ export default function Bulletin_board() {
   }, []);
 
   const filteredBb = useMemo(() => {
-    //if (isLoading || (minPrice == "" && maxPrice == "")) return prevFilteredBbRef.current;
     if (isLoading) return [];
     if (minPrice == "" && maxPrice == "") return bb;
     return filterBbByPrice(bb, minPrice, maxPrice);
@@ -65,20 +71,30 @@ export default function Bulletin_board() {
   const handleSortAsc = useCallback(() => setSortPrice("asc"), []);
   const handleSortDesc = useCallback(() => setSortPrice("desc"), []);
 
+  const handleClearMemoized = useCallback(() => {
+    handleClearBoard(setBb);
+  }, []);
+
   const handleEditMemoized = useCallback(
     (itemBb) => handleEdit(itemBb, setModalWindow, setEditingBb),
     [setModalWindow, setEditingBb]
   );
-  //console.log(prevFilteredBbRef.current,"    =    ",sortedBb);
-if (!isLoading && prevFilteredBbRef.current!==sortedBb) {
-  //Запоминаем прошлое значение, чтобы при повторном изменении не произошел рендер всех элементов
-    prevFilteredBbRef.current = sortedBb 
+
+  if (!isLoading) {
     const displayBb =
       sortedBb.length > 0 ? sortedBb : minPrice || maxPrice ? sortedBb : bb;
     return (
       <div style={{ textAlign: "center" }}>
+        <div>
+          <button
+            type="button"
+            className="fixedRight"
+            onClick={handleClearMemoized}
+          >
+            Очистить доску
+          </button>
+        </div>
         <h1>Доска объявлений</h1>
-        <script>{console.log("re-render SMETOZZZZZZ")}</script>
         <div className="filter">
           <input
             type="number"
