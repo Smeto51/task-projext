@@ -1,5 +1,5 @@
-//import React from 'react';
 import '../fetch/fetch.css';
+import React from 'react';
 
 const CurrencyBlock = ({ currency }) => {
   console.log ("re-render CurrencyBlock");
@@ -12,4 +12,4 @@ const CurrencyBlock = ({ currency }) => {
   );
 };
 
-export default CurrencyBlock;
+export default React.memo(CurrencyBlock);
