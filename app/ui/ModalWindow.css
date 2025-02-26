@@ -23,7 +23,7 @@
   gap: 10px;
 }
 
-div button {
+.buttonBlue {
   padding: 10px 20px;
   font-size: calc(0.8em + 0.5vw);
   background-color: #0070f3;
@@ -32,22 +32,23 @@ div button {
   border-radius: 5px;
   cursor: pointer;
 }
-div button:hover {
+.buttonBlue:hover {
   background-color: #005bb5;
 }
 
-div h1 {
-  font-size: calc(1.5em + 0.5vw); /* Адаптивный размер шрифта */
+/*h1.Centr {
+  font-size: calc(1.5em + 0.5vw); 
   margin: 0;
   text-align: center;
-}
-div textarea {
+}*/
+
+/*textarea.size {
   margin-top: 10px;
   font-size: calc(0.5em + 0.8vw);
   min-height: 250px;
-}
+}*/
 
-div input {
+/*input.size {
   text-align: center;
   font-size: calc(1em + 0.8vw);
-}
+}*/

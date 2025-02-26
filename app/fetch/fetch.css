@@ -68,7 +68,7 @@ button.buttonWorkedForm:hover {
   background-color: #005bb5;
 }
 
-h1 {
+h1.sizeCentr {
   margin: inherit;
   margin-bottom: 10px; 
   text-align: center;

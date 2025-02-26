@@ -1,5 +1,5 @@
 "use client";
-
+import "../form/AnnouncementForm.css";
 import React, { useRef, useState } from "react";
 
 export const InputNameAnnouncement = ({ name, nameInputRef }) => {
@@ -62,11 +62,6 @@ export default function AnnouncementAdd() {
   const priceInputRef = useRef(null);
 
   const handleSave = () => {
-    /**
-     * let nameAnnouncement = document.getElementById("nameAnnouncement").value;
-     * let specification = document.getElementById("specification").value;
-     * let price = document.getElementById("price").value;
-     */
 
     let nameAnnouncement = nameInputRef.current.value;
     let specification = specificationTextareaRef.current.value;
@@ -75,7 +70,6 @@ export default function AnnouncementAdd() {
     if (typeof window !== "undefined") {
       if (nameAnnouncement == "" || specification == "" || price == "") {
         alert("Какое-то поле не заполнено, не удалось сохранить");
-        //event.preventDefault();
         return;
       }
       const newAnnouncement = {
@@ -94,12 +88,6 @@ export default function AnnouncementAdd() {
       nameInputRef.current.value = "";
       specificationTextareaRef.current.value = "";
       priceInputRef.current.value = "";
-
-      /**
-       * document.getElementById("nameAnnouncement").value = "";
-       * document.getElementById("specification").value= "";
-       * document.getElementById("price").value= "";
-       */
     }
   };
   return (

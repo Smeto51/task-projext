@@ -85,10 +85,10 @@ export default function Bulletinboard() {
       sortedBb.length > 0 ? sortedBb : minPrice || maxPrice ? sortedBb : bb;
     return (
       <div style={{ textAlign: "center" }}>
-        <div>
+        <div className="fixedRight">
           <button
             type="button"
-            className="fixedRight"
+            className="blue"
             onClick={handleClearMemoized}
           >
             Очистить доску

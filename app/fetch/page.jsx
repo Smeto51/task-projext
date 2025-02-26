@@ -70,23 +70,6 @@ const NotDoubleRendingBar = React.memo(({apiData, Bar}) => (
   )
 ))
 
-
-
-/*{JSON.stringify(apiData.currencies) != "[]" ? (
-  <BarCBRF
-    key={JSON.stringify(apiData.currencies)}
-    data={apiData.currencies}
-  />
-) : (
-  <p>Данных для графика нет</p>
-)}(*/
-
-//)
-/*
-
-
-
-*/
 const Fetch = () => {
   const [apiData, setApiData] = useState({
     currencies: [],
@@ -192,7 +175,7 @@ const Fetch = () => {
       <div>
         <div className="container">
           <div className="blocks">
-            <h1>Курсы валют ЦБ РФ</h1>
+            <h1 className="sizeCentr">Курсы валют ЦБ РФ</h1>
             {apiData.currencies.map((currency) => (
               <CurrencyBlock key={currency.ID} currency={currency} />
             ))}
@@ -203,7 +186,7 @@ const Fetch = () => {
           </div>
 
           <div className="blocks" style={{ marginTop: "20px" }}>
-            <h1>Курсы валют Openexchangerates USD</h1>
+            <h1 className="sizeCentr">Курсы валют Openexchangerates USD</h1>
             {apiData.openexchangerates.map((openex) => (
               <div key={openex.currency} className="block2">
                 <h1>{openex.currency}</h1>
@@ -219,7 +202,7 @@ const Fetch = () => {
           </div>*/}
 
           <div className="blocks" style={{ marginTop: "20px" }}>
-            <h1>Погода Openweathermap</h1>
+            <h1 className="sizeCentr">Погода Openweathermap</h1>
             {apiData.weather.map((weather) => (
               <WeatherBlock
                 key={weather.city}

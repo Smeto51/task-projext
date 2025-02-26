@@ -41,15 +41,18 @@ export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
   return (
     <div className="modalWindov">
       <div className="modalWindovItems">
-        <h1>Редактирование объявления</h1>
-        <InputNameAnnouncement name={editingBb.name} />
+        <h1 className="Centr">Редактирование объявления</h1>
+      
+        <InputNameAnnouncement name={editingBb.name}/>
         <TextareaSpecification
           id="specification"
           spec={editingBb.specification}
         />
         <InputPrice price={editingBb.price} />
-        <button onClick={handleSave}>Сохранить</button>
-        <button onClick={() => setModalWindow(false)}>Отмена</button>
+ 
+        
+        <button className="buttonBlue" onClick={handleSave}>Сохранить</button>
+        <button className="buttonBlue" onClick={() => setModalWindow(false)}>Отмена</button>
       </div>
     </div>
   );
