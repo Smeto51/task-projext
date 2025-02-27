@@ -34,7 +34,6 @@ const weatherDirectory = (description) => {
 
 const WeatherBlock = React.memo(
   ({ city, temperature, wind, description, icon, country }, src) => (
-    (description = weatherDirectory(description)),
     country != undefined ? (src = country.toLowerCase()) : "",
     (
       //console.log(country),
@@ -53,7 +52,7 @@ const WeatherBlock = React.memo(
           />
         </p>
         <p>Ветер: {wind} м.с</p>
-        <p>{description}</p>
+        <p>{weatherDirectory(description)}</p>
       </div>
     )
   )
@@ -197,10 +196,6 @@ const Fetch = () => {
           <div className="bar" style={{marginTop: "20px"}}>
             <NotDoubleRendingBar apiData={apiData.openexchangerates} Bar={BarOpenexchangerates}/>
           </div>
-          {/*<div className="bar" style={{ marginTop: "20px" }}>
-            <BarOpenexchangerates data={apiData.openexchangerates} />
-          </div>*/}
-
           <div className="blocks" style={{ marginTop: "20px" }}>
             <h1 className="sizeCentr">Погода Openweathermap</h1>
             {apiData.weather.map((weather) => (
@@ -215,17 +210,14 @@ const Fetch = () => {
               />
             ))}
           </div>
-          
-          {/*<div className="bar" style={{ marginTop: "20px" }}>
-            <BarOpenweathermap data={weather} />
-          </div>*/}
+
           <div className="bar" style={{marginTop: "20px"}}>
             <NotDoubleRendingBar apiData={apiData.weather} Bar={BarOpenweathermap}/>
           </div>
           <button className="buttonWorkedForm" onClick={handleButtonUpdate}>
             Обновить данные
           </button>
-          {/*<div className="blockButton" style={{ marginTop: "20px" }}></div>*/}
+          <div className="blockButton" style={{ marginTop: "20px" }}></div>
         </div>
       </div>
     );

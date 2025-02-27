@@ -1,7 +1,6 @@
 "use client";
 
 export default function Announcement() {
-  console.log ("re-render Announcement");
   return (
     <form className="Announcement">
       <div className="AnnouncementForm">

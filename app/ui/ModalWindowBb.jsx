@@ -8,10 +8,7 @@ import {
 } from "../components/AnnouncementForm";
 
 export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
-
   const handleSave = () => {
-    console.log("re-render handleSave");
-
     const name = document.getElementById("nameAnnouncement").value;
     const specification = document.getElementById("specification").value;
     const price = document.getElementById("price").value;
@@ -42,17 +39,20 @@ export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
     <div className="modalWindov">
       <div className="modalWindovItems">
         <h1 className="Centr">Редактирование объявления</h1>
-      
-        <InputNameAnnouncement name={editingBb.name}/>
+
+        <InputNameAnnouncement name={editingBb.name} />
         <TextareaSpecification
           id="specification"
           spec={editingBb.specification}
         />
         <InputPrice price={editingBb.price} />
- 
-        
-        <button className="buttonBlue" onClick={handleSave}>Сохранить</button>
-        <button className="buttonBlue" onClick={() => setModalWindow(false)}>Отмена</button>
+
+        <button className="buttonBlue" onClick={handleSave}>
+          Сохранить
+        </button>
+        <button className="buttonBlue" onClick={() => setModalWindow(false)}>
+          Отмена
+        </button>
       </div>
     </div>
   );
