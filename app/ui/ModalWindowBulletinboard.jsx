@@ -7,21 +7,21 @@ import {
   TextareaSpecification,
 } from "../components/AnnouncementForm";
 
-export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
+export default function ModalWindow({ setModalWindow, editingBulletinboard, setBulletinboard, bb }) {
   const handleSave = () => {
     const name = document.getElementById("nameAnnouncement").value;
     const specification = document.getElementById("specification").value;
     const price = document.getElementById("price").value;
     if (
-      name === editingBb.name &&
-      specification === editingBb.specification &&
-      price === editingBb.price
+      name === editingBulletinboard.name &&
+      specification === editingBulletinboard.specification &&
+      price === editingBulletinboard.price
     ) {
       setModalWindow(false);
       return;
     }
-    const updatedBb = bb.map((item) =>
-      item.id === editingBb.id
+    const updatedBulletinboard = bb.map((item) =>
+      item.id === editingBulletinboard.id
         ? {
             ...item,
             name: document.getElementById("nameAnnouncement").value,
@@ -30,8 +30,8 @@ export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
           }
         : item
     );
-    setBb(updatedBb);
-    localStorage.setItem("Announcement", JSON.stringify(updatedBb));
+    setBulletinboard(updatedBulletinboard);
+    localStorage.setItem("Announcement", JSON.stringify(updatedBulletinboard));
     setModalWindow(false);
   };
 
@@ -40,12 +40,12 @@ export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
       <div className="modalWindovItems">
         <h1 className="Centr">Редактирование объявления</h1>
 
-        <InputNameAnnouncement name={editingBb.name} />
+        <InputNameAnnouncement name={editingBulletinboard.name} />
         <TextareaSpecification
           id="specification"
-          spec={editingBb.specification}
+          spec={editingBulletinboard.specification}
         />
-        <InputPrice price={editingBb.price} />
+        <InputPrice price={editingBulletinboard.price} />
 
         <button className="buttonBlue" onClick={handleSave}>
           Сохранить

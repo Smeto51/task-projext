@@ -24,19 +24,7 @@ const titleConfig = (a) => {
   };
 };
 
-const options1 = (a) => {
-  return {
-    maintainAspectRatio: false,
-    scales: {
-      x: xScaleConfig,
-      y: xScaleConfig,
-    },
-    plugins: titleConfig(a),
-  };
-};
-
 export const BarCBRF = ({ data: dCBRF }) => {
-  console.log("re-render BarCBRF");
   // Данные для графика
   const dataCBRF = {
     labels: dCBRF.map((data) => data.Name),
@@ -63,7 +51,6 @@ export const BarCBRF = ({ data: dCBRF }) => {
   return <Bar data={dataCBRF} options={options} />;
 };
 
-
 const yScaleConfig = {
   min: 0,
   max: 35,
@@ -73,10 +60,9 @@ const yScaleConfig = {
       size: 20,
     },
   },
-}
+};
 
 export const BarOpenexchangerates = ({ data: dOpenexchangerates }) => {
-  console.log("re-render BarOpenexchangerates");
   // Данные для графика
   const Openexchangerates = {
     labels: dOpenexchangerates.map((data) => data.currency),
@@ -105,7 +91,6 @@ export const BarOpenexchangerates = ({ data: dOpenexchangerates }) => {
 };
 
 export const BarOpenweathermap = ({ data: dOpenweather }) => {
-  console.log("re-render BarOpenweathermap");
   const Openweathermap = {
     labels: dOpenweather.map((data) => data.city),
     datasets: [
