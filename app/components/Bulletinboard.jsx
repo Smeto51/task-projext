@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import ModalWindow from "../ui/ModalWindowBb";
+import ModalWindow from "../ui/ModalWindowBulletinboard";
 import { BulletinBlock } from "./BulletinBlock";
 
-const filterBbByPrice = (bb, minPrice, maxPrice) => {
-  console.log("re-render filterBbByPrice");
-  return bb.filter((item) => {
+const filterBulletinboardByPrice = (bulletinboard, minPrice, maxPrice) => {
+  return bulletinboard.filter((item) => {
     const price = parseFloat(item.price);
     const min = minPrice ? parseFloat(minPrice) : 0;
     const max = maxPrice ? parseFloat(maxPrice) : +Infinity;
@@ -13,84 +12,85 @@ const filterBbByPrice = (bb, minPrice, maxPrice) => {
   });
 };
 
-const sortBbByPrice = (order, temp_bb) => {
-  return [...temp_bb].sort((a, b) => {
+const sortBulletinboardByPrice = (order, temp_bulletinboard) => {
+  return [...temp_bulletinboard].sort((a, b) => {
     const priceA = parseFloat(a.price);
     const priceB = parseFloat(b.price);
     return order === "asc" ? priceA - priceB : priceB - priceA;
   });
 };
 
-export const handleEdit = (itemBb, setModalWindow, setEditingBb) => {
-  console.log("re-render handleEdit");
-  setEditingBb(itemBb);
+export const handleEdit = (
+  itemBulletinboard,
+  setModalWindow,
+  setEditingBulletinboard
+) => {
+  setEditingBulletinboard(itemBulletinboard);
   setModalWindow(true);
 };
 
-const handleClearBoard = (setBb) => {
-  console.log("re-render handleClearBoard");
+const handleClearBoard = (setBulletinboard) => {
   if (typeof window !== "undefined") {
     localStorage.clear();
-    setBb([]);
+    setBulletinboard([]);
     alert("Доска объявлений очищена!");
   }
 };
 
 export default function Bulletinboard() {
-  console.log("re-render Bulletinboard");
-  let [bb, setBb] = useState([]);
+  let [bulletinboard, setBulletinboard] = useState([]);
   const [sortPrice, setSortPrice] = useState("asc");
   let [isLoading, setIsLoading] = useState(true);
   let [minPrice, setMinPrice] = useState("");
   let [maxPrice, setMaxPrice] = useState("");
 
   const [modalOpen, setModalWindow] = useState(false);
-  const [editingBb, setEditingBb] = useState(null);
+  const [editingBulletinboard, setEditingBulletinboard] = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const saveAnnouncement =
         JSON.parse(localStorage.getItem("Announcement")) || [];
-      setBb(saveAnnouncement);
+      setBulletinboard(saveAnnouncement);
       setIsLoading(false);
     }
   }, []);
 
-  const filteredBb = useMemo(() => {
+  const filteredBulletinboard = useMemo(() => {
     if (isLoading) return [];
-    if (minPrice == "" && maxPrice == "") return bb;
-    return filterBbByPrice(bb, minPrice, maxPrice);
-  }, [minPrice, maxPrice, bb]);
+    if (minPrice == "" && maxPrice == "") return bulletinboard;
+    return filterBulletinboardByPrice(bulletinboard, minPrice, maxPrice);
+  }, [minPrice, maxPrice, bulletinboard]);
 
-  const sortedBb = useMemo(() => {
+  const sortedBulletinboard = useMemo(() => {
     if (isLoading) return [];
-    console.log("re-render sortBbByPrice");
-    return sortBbByPrice(sortPrice, filteredBb);
-  }, [sortPrice, filteredBb]);
+    return sortBulletinboardByPrice(sortPrice, filteredBulletinboard);
+  }, [sortPrice, filteredBulletinboard]);
 
   const handleSortAsc = useCallback(() => setSortPrice("asc"), []);
   const handleSortDesc = useCallback(() => setSortPrice("desc"), []);
 
   const handleClearMemoized = useCallback(() => {
-    handleClearBoard(setBb);
+    handleClearBoard(setBulletinboard);
   }, []);
 
   const handleEditMemoized = useCallback(
-    (itemBb) => handleEdit(itemBb, setModalWindow, setEditingBb),
-    [setModalWindow, setEditingBb]
+    (itemBulletinboard) =>
+      handleEdit(itemBulletinboard, setModalWindow, setEditingBulletinboard),
+    [setModalWindow, setEditingBulletinboard]
   );
 
   if (!isLoading) {
-    const displayBb =
-      sortedBb.length > 0 ? sortedBb : minPrice || maxPrice ? sortedBb : bb;
+    const displayBulletinboard =
+      sortedBulletinboard.length > 0
+        ? sortedBulletinboard
+        : minPrice || maxPrice
+        ? sortedBulletinboard
+        : bulletinboard;
     return (
       <div style={{ textAlign: "center" }}>
         <div className="fixedRight">
-          <button
-            type="button"
-            className="blue"
-            onClick={handleClearMemoized}
-          >
+          <button type="button" className="blue" onClick={handleClearMemoized}>
             Очистить доску
           </button>
         </div>
@@ -119,13 +119,13 @@ export default function Bulletinboard() {
           </button>
         </div>
 
-        {displayBb.length > 0 ? (
-          displayBb.map((temp_bb) => (
+        {displayBulletinboard.length > 0 ? (
+          displayBulletinboard.map((temp_bulletinboard) => (
             <BulletinBlock
-              key={temp_bb.id}
-              temp_bb={temp_bb}
-              bb={bb}
-              setBb={setBb}
+              key={temp_bulletinboard.id}
+              temp_bulletinboard={temp_bulletinboard}
+              bulletinboard={bulletinboard}
+              setBulletinboard={setBulletinboard}
               onEdit={handleEditMemoized}
             />
           ))
@@ -135,9 +135,9 @@ export default function Bulletinboard() {
         {modalOpen && (
           <ModalWindow
             setModalWindow={setModalWindow}
-            editingBb={editingBb}
-            bb={bb}
-            setBb={setBb}
+            editingBulletinboard={editingBulletinboard}
+            bulletinboard={bulletinboard}
+            setBulletinboard={setBulletinboard}
           ></ModalWindow>
         )}
       </div>

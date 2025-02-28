@@ -8,13 +8,11 @@ async function fetchData() {
 }
 
 export default async function Home() {
-  console.log("re-render Home");
   const posts = await fetchData();
   return (
     <div>
       <h1>Главная страница</h1>
       {posts.map((el) => (
-        //<div key={el.id} className="post">
         <div key={el.id} className="post">
           <h2>{el.title}</h2>
           <p>{el.body}</p>

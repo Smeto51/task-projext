@@ -1,5 +1,10 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import CurrencyBlock from "../components/CurrencyBlock";
 
 import "./fetch.css";
@@ -8,10 +13,11 @@ import { BarCBRF, BarOpenexchangerates, BarOpenweathermap } from "./bar";
 Chart.register(...registerables);
 
 const API_KEY_CURRENCY = "998ea5243428428a9c8c6199c5602cb6";
+const CHECK_API_CURRENCY = false; //Скоро будет лимит запросов
+
 const API_KEY_WEATHER = "d345de8088fcd5858702b7a64416eb36";
 
 const weatherDirectory = (description) => {
-  console.log("re-render weatherDirectory");
   switch (description) {
     case "overcast clouds":
       return "Пасмурные облака";
@@ -34,10 +40,8 @@ const weatherDirectory = (description) => {
 
 const WeatherBlock = React.memo(
   ({ city, temperature, wind, description, icon, country }, src) => (
-    (description = weatherDirectory(description)),
     country != undefined ? (src = country.toLowerCase()) : "",
     (
-      //console.log(country),
       <div className="block">
         <h1>
           {city} ({country}{" "}
@@ -53,22 +57,19 @@ const WeatherBlock = React.memo(
           />
         </p>
         <p>Ветер: {wind} м.с</p>
-        <p>{description}</p>
+        <p>{weatherDirectory(description)}</p>
       </div>
     )
   )
 );
 
-const NotDoubleRendingBar = React.memo(({apiData, Bar}) => (
+const NotDoubleRendingBar = React.memo(({ apiData, Bar }) =>
   JSON.stringify(apiData) != "[]" ? (
-    <Bar
-      key={apiData}
-      data={apiData}
-    />
+    <Bar data={apiData} />
   ) : (
-    (<p>Нет данных для графика</p>)
+    <p>Нет данных для графика</p>
   )
-))
+);
 
 const Fetch = () => {
   const [apiData, setApiData] = useState({
@@ -80,21 +81,21 @@ const Fetch = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const FetchApi = useCallback(async () => {
+    console.log("FetchApi");
     try {
-      console.log("Вызов FetchApi");
       //Запрос к openexchangerates
-      const openexchangeratesResponse = await fetch(
-        `https://openexchangerates.org/api/latest.json?app_id=${API_KEY_CURRENCY}`
-      );
-      const openexchangeratesData = await openexchangeratesResponse.json();
-      const rates = openexchangeratesData.rates;
+      if (CHECK_API_CURRENCY) {
+        var openexchangeratesResponse = await fetch(
+          `https://openexchangerates.org/api/latest.json?app_id=${API_KEY_CURRENCY}`
+        );
+        var openexchangeratesData = await openexchangeratesResponse.json();
+      }
 
       //Запрос к ЦБ РФ
       const cbrRespone = await fetch(
         "https://www.cbr-xml-daily.ru/daily_json.js"
       );
       const cbrData = await cbrRespone.json();
-      const currencyItems = Object.values(cbrData.Valute);
 
       //Запрос к Погоде
       const cities = ["Murmansk ", "Минск", "Paris", "Хургада", "Анталья"];
@@ -104,45 +105,48 @@ const Fetch = () => {
         ).then((response) => response.json())
       );
       const weatherData = await Promise.all(requestsPromiseWeather);
-      const weather = weatherData.map((item) => ({
-        city: item.name,
-        country: item.sys.country,
-        temperature: item.main.temp,
-        wind: item.wind.speed,
-        description: item.weather[0].description,
-        icon: item.weather[0].icon,
-      }));
 
-      setApiData((prev) => {
-        const newCurrencies = currencyItems.slice(0, 5);
-        const newOpenexchangerates = [
-          { currency: "AED", rate: rates.AED },
-          { currency: "RUB", rate: rates.RUB },
-          { currency: "SEK", rate: rates.SEK },
-          { currency: "THB", rate: rates.THB },
-          { currency: "BYN", rate: rates.BYN },
-        ];
-        // Глубокое сравнение данных
-        if (
+      const newData = CHECK_API_CURRENCY
+        ? {
+            currencies: Object.values(cbrData.Valute).slice(0, 5),
+            openexchangerates: ["AED", "RUB", "SEK", "THB", "BYN"].map(
+              (currency) => ({
+                currency,
+                rate: openexchangeratesData.rates[currency],
+              })
+            ),
+            weather: weatherData.map((item) => ({
+              city: item.name,
+              country: item.sys.country,
+              temperature: item.main.temp,
+              wind: item.wind.speed,
+              description: item.weather[0].description,
+              icon: item.weather[0].icon,
+            })),
+          }
+        : {
+            currencies: Object.values(cbrData.Valute).slice(0, 5),
+            openexchangerates: ["AED", "RUB", "SEK", "THB", "BYN"].map(
+              (currency) => ({
+                currency,
+              })
+            ),
+            weather: weatherData.map((item) => ({
+              city: item.name,
+              country: item.sys.country,
+              temperature: item.main.temp,
+              wind: item.wind.speed,
+              description: item.weather[0].description,
+              icon: item.weather[0].icon,
+            })),
+          };
 
-          JSON.stringify(prev.currencies) === JSON.stringify(newCurrencies) &&
-          JSON.stringify(prev.openexchangerates) === JSON.stringify(newOpenexchangerates) &&
-          JSON.stringify(prev.weather) === JSON.stringify(weather)
-        ) {
-          
-          return prev; // Данные не изменились, возвращаем предыдущее состояние
-        }
-
-        return {
-          currencies: newCurrencies,
-          openexchangerates: newOpenexchangerates,
-          weather,
-        };
-      });
+      setApiData((prev) =>
+        JSON.stringify(prev) === JSON.stringify(newData) ? prev : newData
+      );
     } catch (error) {
       console.error("Ошибка при загрузке данных: ", error);
     }
-    /*------------------------------------------------------*/
   }, []);
 
   useEffect(() => {
@@ -153,22 +157,18 @@ const Fetch = () => {
     } else {
       FetchApi();
     }
-
   }, [update, isLoading]);
 
-  useEffect(() => {
-    const interval = setInterval(
-      FetchApi,
-      5000
-    );
+  /*useEffect(() => {
+    FetchApi();
+    const interval = setInterval(FetchApi, 5000);
     return () => clearInterval(interval);
-  },[]);
-
+  }, []);*/
 
   const handleButtonUpdate = useCallback(() => {
     setUpdate((update) => !update);
   }, []);
- 
+
   //Какой способ использования блоков лучше???
   if (!isLoading) {
     return (
@@ -180,9 +180,9 @@ const Fetch = () => {
               <CurrencyBlock key={currency.ID} currency={currency} />
             ))}
           </div>
-          
+
           <div className="bar">
-            <NotDoubleRendingBar apiData={apiData.currencies} Bar={BarCBRF}/>
+            <NotDoubleRendingBar apiData={apiData.currencies} Bar={BarCBRF} />
           </div>
 
           <div className="blocks" style={{ marginTop: "20px" }}>
@@ -194,13 +194,12 @@ const Fetch = () => {
               </div>
             ))}
           </div>
-          <div className="bar" style={{marginTop: "20px"}}>
-            <NotDoubleRendingBar apiData={apiData.openexchangerates} Bar={BarOpenexchangerates}/>
+          <div className="bar" style={{ marginTop: "20px" }}>
+            <NotDoubleRendingBar
+              apiData={apiData.openexchangerates}
+              Bar={BarOpenexchangerates}
+            />
           </div>
-          {/*<div className="bar" style={{ marginTop: "20px" }}>
-            <BarOpenexchangerates data={apiData.openexchangerates} />
-          </div>*/}
-
           <div className="blocks" style={{ marginTop: "20px" }}>
             <h1 className="sizeCentr">Погода Openweathermap</h1>
             {apiData.weather.map((weather) => (
@@ -215,17 +214,17 @@ const Fetch = () => {
               />
             ))}
           </div>
-          
-          {/*<div className="bar" style={{ marginTop: "20px" }}>
-            <BarOpenweathermap data={weather} />
-          </div>*/}
-          <div className="bar" style={{marginTop: "20px"}}>
-            <NotDoubleRendingBar apiData={apiData.weather} Bar={BarOpenweathermap}/>
+
+          <div className="bar" style={{ marginTop: "20px" }}>
+            <NotDoubleRendingBar
+              apiData={apiData.weather}
+              Bar={BarOpenweathermap}
+            />
           </div>
           <button className="buttonWorkedForm" onClick={handleButtonUpdate}>
             Обновить данные
           </button>
-          {/*<div className="blockButton" style={{ marginTop: "20px" }}></div>*/}
+          <div className="blockButton" style={{ marginTop: "20px" }}></div>
         </div>
       </div>
     );

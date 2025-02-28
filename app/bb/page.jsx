@@ -1,9 +1,8 @@
 "use client";
-import Bulletinboard from "../components/Bulletin_board";
+import Bulletinboard from "../components/Bulletinboard";
 import "./bb.css";
 
-export default function Bulletin_board() {
-  console.log("re-render Bord Page");
+export default function BulletinBoardPage() {
   return (
     <div>
       <Bulletinboard/>

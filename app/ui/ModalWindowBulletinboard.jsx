@@ -7,24 +7,21 @@ import {
   TextareaSpecification,
 } from "../components/AnnouncementForm";
 
-export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
-
+export default function ModalWindow({ setModalWindow, editingBulletinboard, setBulletinboard, bb }) {
   const handleSave = () => {
-    console.log("re-render handleSave");
-
     const name = document.getElementById("nameAnnouncement").value;
     const specification = document.getElementById("specification").value;
     const price = document.getElementById("price").value;
     if (
-      name === editingBb.name &&
-      specification === editingBb.specification &&
-      price === editingBb.price
+      name === editingBulletinboard.name &&
+      specification === editingBulletinboard.specification &&
+      price === editingBulletinboard.price
     ) {
       setModalWindow(false);
       return;
     }
-    const updatedBb = bb.map((item) =>
-      item.id === editingBb.id
+    const updatedBulletinboard = bb.map((item) =>
+      item.id === editingBulletinboard.id
         ? {
             ...item,
             name: document.getElementById("nameAnnouncement").value,
@@ -33,8 +30,8 @@ export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
           }
         : item
     );
-    setBb(updatedBb);
-    localStorage.setItem("Announcement", JSON.stringify(updatedBb));
+    setBulletinboard(updatedBulletinboard);
+    localStorage.setItem("Announcement", JSON.stringify(updatedBulletinboard));
     setModalWindow(false);
   };
 
@@ -42,17 +39,20 @@ export default function ModalWindow({ setModalWindow, editingBb, setBb, bb }) {
     <div className="modalWindov">
       <div className="modalWindovItems">
         <h1 className="Centr">Редактирование объявления</h1>
-      
-        <InputNameAnnouncement name={editingBb.name}/>
+
+        <InputNameAnnouncement name={editingBulletinboard.name} />
         <TextareaSpecification
           id="specification"
-          spec={editingBb.specification}
+          spec={editingBulletinboard.specification}
         />
-        <InputPrice price={editingBb.price} />
- 
-        
-        <button className="buttonBlue" onClick={handleSave}>Сохранить</button>
-        <button className="buttonBlue" onClick={() => setModalWindow(false)}>Отмена</button>
+        <InputPrice price={editingBulletinboard.price} />
+
+        <button className="buttonBlue" onClick={handleSave}>
+          Сохранить
+        </button>
+        <button className="buttonBlue" onClick={() => setModalWindow(false)}>
+          Отмена
+        </button>
       </div>
     </div>
   );

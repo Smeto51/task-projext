@@ -1,10 +1,9 @@
-import '../fetch/fetch.css';
-import React from 'react';
+import "../fetch/fetch.css";
+import React from "react";
 
 const CurrencyBlock = ({ currency }) => {
-  console.log ("re-render CurrencyBlock");
   return (
-    <div className='block'>
+    <div className="block">
       <h1>{currency.CharCode}</h1>
       <p>{currency.Name}</p>
       <p>Курс: {currency.Value} RUB</p>

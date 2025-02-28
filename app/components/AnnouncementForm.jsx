@@ -3,13 +3,12 @@ import "../form/AnnouncementForm.css";
 import React, { useRef, useState } from "react";
 
 export const InputNameAnnouncement = ({ name, nameInputRef }) => {
-  console.log(`re-render InputNameAnnouncement`);
   return (
     <>
       <input
         type="text"
         defaultValue={name}
-        ref={nameInputRef} 
+        ref={nameInputRef}
         id="nameAnnouncement"
         maxLength={57}
         placeholder="Введите название"
@@ -23,7 +22,6 @@ export const TextareaSpecification = ({
   spec,
   specificationTextareaRef,
 }) => {
-  console.log("re-render Textarea Specification");
   return (
     <>
       <textarea
@@ -39,8 +37,6 @@ export const TextareaSpecification = ({
 };
 
 export const InputPrice = ({ price, priceInputRef }) => {
-  console.log(`re-render InputPrice`);
-
   return (
     <>
       <input
@@ -56,17 +52,14 @@ export const InputPrice = ({ price, priceInputRef }) => {
 };
 
 export default function AnnouncementAdd() {
-
   const nameInputRef = useRef(null);
   const specificationTextareaRef = useRef(null);
   const priceInputRef = useRef(null);
 
   const handleSave = () => {
-
     let nameAnnouncement = nameInputRef.current.value;
     let specification = specificationTextareaRef.current.value;
     let price = priceInputRef.current.value;
-    console.log("re-render handleSave");
     if (typeof window !== "undefined") {
       if (nameAnnouncement == "" || specification == "" || price == "") {
         alert("Какое-то поле не заполнено, не удалось сохранить");
