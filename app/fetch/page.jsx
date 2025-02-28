@@ -13,7 +13,7 @@ import { BarCBRF, BarOpenexchangerates, BarOpenweathermap } from "./bar";
 Chart.register(...registerables);
 
 const API_KEY_CURRENCY = "998ea5243428428a9c8c6199c5602cb6";
-const CHECK_API_CURRENCY = false; //Скоро будет лимит запросов
+const CHECK_API_CURRENCY = false; //Скоро будет лимит запросов, пока что ненужно использование
 
 const API_KEY_WEATHER = "d345de8088fcd5858702b7a64416eb36";
 
@@ -106,13 +106,13 @@ const Fetch = () => {
       );
       const weatherData = await Promise.all(requestsPromiseWeather);
 
-      const newData = CHECK_API_CURRENCY
-        ? {
+      const newData = 
+        {
             currencies: Object.values(cbrData.Valute).slice(0, 5),
             openexchangerates: ["AED", "RUB", "SEK", "THB", "BYN"].map(
               (currency) => ({
                 currency,
-                rate: openexchangeratesData.rates[currency],
+                rate: CHECK_API_CURRENCY ? openexchangeratesData?.rates[currency] : undefined,
               })
             ),
             weather: weatherData.map((item) => ({
@@ -124,22 +124,7 @@ const Fetch = () => {
               icon: item.weather[0].icon,
             })),
           }
-        : {
-            currencies: Object.values(cbrData.Valute).slice(0, 5),
-            openexchangerates: ["AED", "RUB", "SEK", "THB", "BYN"].map(
-              (currency) => ({
-                currency,
-              })
-            ),
-            weather: weatherData.map((item) => ({
-              city: item.name,
-              country: item.sys.country,
-              temperature: item.main.temp,
-              wind: item.wind.speed,
-              description: item.weather[0].description,
-              icon: item.weather[0].icon,
-            })),
-          };
+        
 
       setApiData((prev) =>
         JSON.stringify(prev) === JSON.stringify(newData) ? prev : newData
