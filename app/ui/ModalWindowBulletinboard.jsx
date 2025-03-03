@@ -7,7 +7,7 @@ import {
   TextareaSpecification,
 } from "../components/AnnouncementForm";
 
-export default function ModalWindow({ setModalWindow, editingBulletinboard, setBulletinboard, bb }) {
+export default function ModalWindow({ setModalWindow, editingBulletinboard, setBulletinboard, bulletinboard }) {
   const handleSave = () => {
     const name = document.getElementById("nameAnnouncement").value;
     const specification = document.getElementById("specification").value;
@@ -20,7 +20,7 @@ export default function ModalWindow({ setModalWindow, editingBulletinboard, setB
       setModalWindow(false);
       return;
     }
-    const updatedBulletinboard = bb.map((item) =>
+    const updatedBulletinboard = bulletinboard.map((item) =>
       item.id === editingBulletinboard.id
         ? {
             ...item,
